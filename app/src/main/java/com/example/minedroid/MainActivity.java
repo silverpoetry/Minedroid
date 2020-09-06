@@ -11,9 +11,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //隐藏标题栏
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null)actionBar.hide();
 
-        MapManager mapManager = new MapManager(MapManager.GameDifficulty.HARD);
+        MapManager mapManager = new MapManager(this,MapManager.GameDifficulty.EASY);
         mapManager.generateMap();
-        mapManager.generateButtons(this);
+        mapManager.generateButtons();
     }
 }
