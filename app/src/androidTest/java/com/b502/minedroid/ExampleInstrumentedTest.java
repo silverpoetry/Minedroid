@@ -1,4 +1,4 @@
-package com.example.minedroid;
+package com.b502.minedroid;
 
 import android.content.Context;
 
