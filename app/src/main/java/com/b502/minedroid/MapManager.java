@@ -17,7 +17,7 @@ public class MapManager {
     public enum GameDifficulty {
         EASY, MIDDLE, HARD
     }
-    public enum GameState{
+    public enum GameState {
         WAIT,PLAYING,OVER
     }
 
@@ -39,7 +39,7 @@ public class MapManager {
         height = mapsize[this.difficulty.ordinal()][1];
         count = minecount[this.difficulty.ordinal()];
         leftblock = height * width - count;
-        buttonwidth = this.difficulty==GameDifficulty.EASY?40:25;
+        buttonwidth = this.difficulty==GameDifficulty.EASY? 40: 25;
 
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
@@ -100,6 +100,13 @@ public class MapManager {
     }
 
     void gameWin() {
+        for(int i = 1; i <= width; i++) {
+            for(int j = 1; j <= height; j++) {
+                if(map[i][j].getButtonState() == MapItem.State.DEFAULT) {
+                    map[i][j].setButtonState(MapItem.State.FLAGED);
+                }
+            }
+        }
         Toast.makeText(context,"游戏胜利",Toast.LENGTH_SHORT ).show();
     }
     void extendBlockAt(int x, int y) {
@@ -109,7 +116,7 @@ public class MapManager {
         if(map[x][y].buttonState != MapItem.State.DEFAULT)return;
 
         if(!map[x][y].isMine()) {
-            map[x][y].setState(MapItem.State.OPENED);
+            map[x][y].setButtonState(MapItem.State.OPENED);
             leftblock--;
             if(leftblock == 0) {
                 gameWin();
@@ -130,25 +137,25 @@ public class MapManager {
         }
     }
 
-    void openBlockAround(int x, int y){
+    void openBlockAround(int x, int y) {
         if(x == 0 || y == 0)return ;
         if(x == width + 1 || y == height + 1)return;
 
         MapItem block = map[x][y];
         int flagCount = 0;
 
-        for(int i = x - 1; i <= x + 1; i++){
-            for(int j = y - 1; j <= y + 1; j++){
-                if(i==x&&j==y){
+        for(int i = x - 1; i <= x + 1; i++) {
+            for(int j = y - 1; j <= y + 1; j++) {
+                if(i == x && j == y) {
                     continue;
                 }
-                if(map[i][j].getButtonState()== MapItem.State.FLAGED){
+                if(map[i][j].getButtonState() == MapItem.State.FLAGED) {
                     flagCount++;
                 }
             }
         }
 
-        if(block.getMineCount() == flagCount){
+        if(block.getMineCount() == flagCount) {
             extendBlockAt(x,y - 1);
             extendBlockAt(x,y + 1);
             extendBlockAt(x - 1, y);
@@ -192,7 +199,7 @@ public class MapManager {
                                 while (map[x][y].isMine())generateMap();
                                 gameState = GameState.PLAYING;
                             case PLAYING:
-                                switch (map[x][y].getButtonState()){
+                                switch (map[x][y].getButtonState()) {
                                     case DEFAULT:
                                         extendBlockAt(x, y);
                                         break;
@@ -216,9 +223,9 @@ public class MapManager {
                                                  int[] pos = (int[])view.getTag();
                                                 // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
                                                  if(map[pos[0]][pos[1]].buttonState == MapItem.State.DEFAULT ) {
-                                                     map[pos[0]][pos[1]].setState(MapItem.State.FLAGED);
+                                                     map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
                                                  } else if(map[pos[0]][pos[1]].buttonState == MapItem.State.FLAGED) {
-                                                     map[pos[0]][pos[1]].setState(MapItem.State.DEFAULT);
+                                                     map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
                                                  }
                                                  return true;
                                              }

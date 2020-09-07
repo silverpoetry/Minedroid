@@ -16,9 +16,6 @@ public class MapItem {
         return buttonState;
     }
 
-    public void setButtonState(State buttonState) {
-        this.buttonState = buttonState;
-    }
 
     public boolean isMine() {
         return isMine;
@@ -48,7 +45,7 @@ public class MapItem {
         setMine(ismine);
     }
 
-     public void setState(MapItem.State state) {
+     public void setButtonState(MapItem.State state) {
         this.buttonState = state;
         if (state == MapItem.State.DEFAULT) {
             this.viewButton.setText("");
