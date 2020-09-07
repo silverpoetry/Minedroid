@@ -118,7 +118,7 @@ public enum GameState{
 
         if(!map[x][y].isMine())
         {
-            setState(map[x][y], MapItem.State.OPENED);
+            map[x][y].setState( MapItem.State.OPENED);
             leftblock--;
             if(leftblock==0)
             {
@@ -142,22 +142,7 @@ public enum GameState{
 
 
     }
-    void setState(MapItem item, MapItem.State state)
-    {
-        item.buttonState= state;
-        if (state== MapItem.State.DEFAULT)
-        {
-            item.viewButton.setText("");
 
-        }
-        else if(state == MapItem.State.FLAGED)
-        {
-            item.viewButton.setText("标");
-        }  else if(state == MapItem.State.OPENED)
-        {
-            item.viewButton.setText(Integer.toString(item.getMineCount()));
-        }
-    }
 
     public void generateButtons()
     {
@@ -200,10 +185,10 @@ public enum GameState{
                                                  int[] pos = (int[])view.getTag();
                                                 // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
                                                  if(map[pos[0]][pos[1]].buttonState== MapItem.State.DEFAULT ) {
-                                                    setState(map[pos[0]][pos[1]], MapItem.State.FLAGED);
+                                                     map[pos[0]][pos[1]].setState(MapItem.State.FLAGED);
                                                  }else if(map[pos[0]][pos[1]].buttonState== MapItem.State.FLAGED)
                                                  {
-                                                     setState(map[pos[0]][pos[1]], MapItem.State.DEFAULT);
+                                                     map[pos[0]][pos[1]].setState(MapItem.State.DEFAULT);
                                                  }
                                                  return true;
                                              }
