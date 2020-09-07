@@ -18,5 +18,6 @@ public class MainActivity extends AppCompatActivity {
         MapManager mapManager = new MapManager(this,MapManager.GameDifficulty.EASY);
         mapManager.generateMap();
         mapManager.generateButtons();
+
     }
 }
