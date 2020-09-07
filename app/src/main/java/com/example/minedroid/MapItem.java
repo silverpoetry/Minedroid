@@ -3,7 +3,7 @@ package com.example.minedroid;
 import android.widget.Button;
 
 public class MapItem {
-    public  enum  State{
+    public enum State{
         DEFAULT,OPENED,FLAGED
     }
     //地图项
@@ -49,8 +49,8 @@ public class MapItem {
     }
 
      public void setState(MapItem.State state) {
-        this.buttonState= state;
-        if (state== MapItem.State.DEFAULT) {
+        this.buttonState = state;
+        if (state == MapItem.State.DEFAULT) {
             this.viewButton.setText("");
         } else if(state == MapItem.State.FLAGED) {
             this.viewButton.setText("标");

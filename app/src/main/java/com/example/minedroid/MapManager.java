@@ -1,9 +1,6 @@
 package com.example.minedroid;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetHost;
-import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,18 +33,18 @@ public class MapManager {
     GameState gameState = GameState.WAIT;
     Activity context;
     public MapManager(Activity context, GameDifficulty difficulty) {
-        this.context=context;
+        this.context = context;
         this.difficulty = difficulty;
         width = mapsize[this.difficulty.ordinal()][0];
         height = mapsize[this.difficulty.ordinal()][1];
         count = minecount[this.difficulty.ordinal()];
-        leftblock =height* width - count;
+        leftblock = height * width - count;
         buttonwidth = this.difficulty==GameDifficulty.EASY?40:25;
 
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
-                map[i][j].buttonState= MapItem.State.DEFAULT;
+                map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
     }
@@ -58,7 +54,7 @@ public class MapManager {
     }
     private int getPixelsFromDp(int  size) {
 
-        DisplayMetrics metrics =new DisplayMetrics();
+        DisplayMetrics metrics = new DisplayMetrics();
 
         context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -106,27 +102,27 @@ public class MapManager {
     void gameWin() {
         Toast.makeText(context,"游戏胜利",Toast.LENGTH_SHORT ).show();
     }
-    void extendBlock(int x, int y) {
+    void extendBlockAt(int x, int y) {
 
-        if(x==0||y==0)return ;
-        if(x==width+1||y==height+1)return;
-        if(map[x][y].buttonState== MapItem.State.OPENED)return ;
+        if(x == 0 || y == 0)return ;
+        if(x == width + 1 || y == height + 1)return;
+        if(map[x][y].buttonState == MapItem.State.OPENED)return ;
 
         if(!map[x][y].isMine()) {
-            map[x][y].setState( MapItem.State.OPENED);
+            map[x][y].setState(MapItem.State.OPENED);
             leftblock--;
-            if(leftblock==0) {
+            if(leftblock == 0) {
                 gameWin();
             }
-            if(map[x][y].getMineCount()==0) {
-                extendBlock(x - 1,y - 1);
-                extendBlock(x,y - 1);
-                extendBlock(x + 1,y - 1);
-                extendBlock(x - 1, y);
-                extendBlock(x + 1, y);
-                extendBlock(x - 1,y + 1);
-                extendBlock(x,y + 1);
-                extendBlock(x + 1,y + 1);
+            if(map[x][y].getMineCount() == 0) {
+                extendBlockAt(x - 1,y - 1);
+                extendBlockAt(x,y - 1);
+                extendBlockAt(x + 1,y - 1);
+                extendBlockAt(x - 1, y);
+                extendBlockAt(x + 1, y);
+                extendBlockAt(x - 1,y + 1);
+                extendBlockAt(x,y + 1);
+                extendBlockAt(x + 1,y + 1);
             }
         } else {
             Toast.makeText(context,"游戏结束",Toast.LENGTH_SHORT ).show();
@@ -135,7 +131,7 @@ public class MapManager {
 
 
     public void generateButtons() {
-        LinearLayout parent =(LinearLayout) context.findViewById(R.id.boxLayout);
+        LinearLayout parent = (LinearLayout) context.findViewById(R.id.boxLayout);
         for (int j = 1; j <= height; j++) {
             LinearLayout ln = new LinearLayout(context);
             ln.setOrientation(LinearLayout.HORIZONTAL);
@@ -147,10 +143,10 @@ public class MapManager {
 
             for (int i = 1; i <= width; i++) {
                 Button b = new Button(context);
-                LinearLayout.LayoutParams lp =new  LinearLayout.LayoutParams(getPixelsFromDp(buttonwidth),getPixelsFromDp(buttonwidth+5));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(getPixelsFromDp(buttonwidth),getPixelsFromDp(buttonwidth + 5));
                 lp.setMargins(-6,-6,0,0);
                 b.setLayoutParams(lp);
-                b.setTag(new int[]{i,j});
+                b.setTag(new int[]{i, j});
                 b.setPadding(1,1,1,1);
                // if (map[i][j].isMine)b.setText("雷");
              //   else b.setText(Integer.toString(map[i][j].getMineCount()));
@@ -159,11 +155,16 @@ public class MapManager {
                     public void onClick(View view) {
 
                         int[] pos = (int[])view.getTag();
-                        if(gameState==GameState.WAIT){
-                            while (map[pos[0]][pos[1]].isMine())generateMap();
-                            gameState=GameState.PLAYING;
+                        switch (gameState){
+                            case WAIT:
+                                while (map[pos[0]][pos[1]].isMine())generateMap();
+                                gameState = GameState.PLAYING;
+                            case PLAYING:
+                                extendBlockAt(pos[0],pos[1]);
+                                break;
+                            case OVER:
+                                break;
                         }
-                         extendBlock(pos[0],pos[1]);
                      //   Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
                     }
                 });
@@ -173,16 +174,16 @@ public class MapManager {
                                              public boolean onLongClick(View view) {
                                                  int[] pos = (int[])view.getTag();
                                                 // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
-                                                 if(map[pos[0]][pos[1]].buttonState== MapItem.State.DEFAULT ) {
+                                                 if(map[pos[0]][pos[1]].buttonState == MapItem.State.DEFAULT ) {
                                                      map[pos[0]][pos[1]].setState(MapItem.State.FLAGED);
-                                                 } else if(map[pos[0]][pos[1]].buttonState== MapItem.State.FLAGED) {
+                                                 } else if(map[pos[0]][pos[1]].buttonState == MapItem.State.FLAGED) {
                                                      map[pos[0]][pos[1]].setState(MapItem.State.DEFAULT);
                                                  }
                                                  return true;
                                              }
                                          });
-                        ln.addView(b);
-                map[i][j].viewButton=b;
+                ln.addView(b);
+                map[i][j].viewButton = b;
             }
             parent.addView(ln);
         }
