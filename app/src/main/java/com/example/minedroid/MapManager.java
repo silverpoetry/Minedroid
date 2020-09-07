@@ -140,7 +140,7 @@ public class MapManager {
         for(int i = x - 1; i <= x + 1; i++){
             for(int j = y - 1; j <= y + 1; j++){
                 if(i==x&&j==y){
-                    break;
+                    continue;
                 }
                 if(map[i][j].getButtonState()== MapItem.State.FLAGED){
                     flagCount++;
@@ -202,7 +202,6 @@ public class MapManager {
                                     case FLAGED:
                                         break;
                                 }
-                                extendBlockAt(x, y);
                                 break;
                             case OVER:
                                 break;
