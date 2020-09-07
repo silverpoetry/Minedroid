@@ -44,28 +44,18 @@ public class MapItem {
         this.viewButton = viewButton;
     }
 
-    public  MapItem(boolean ismine)
-    {
+    public  MapItem(boolean ismine) {
         setMine(ismine);
     }
 
-     public  void setState( MapItem.State state)
-    {
+     public void setState(MapItem.State state) {
         this.buttonState= state;
-        if (state== MapItem.State.DEFAULT)
-        {
+        if (state== MapItem.State.DEFAULT) {
             this.viewButton.setText("");
-
-        }
-        else if(state == MapItem.State.FLAGED)
-        {
+        } else if(state == MapItem.State.FLAGED) {
             this.viewButton.setText("标");
-        }  else if(state == MapItem.State.OPENED)
-        {
+        } else if(state == MapItem.State.OPENED) {
             this.viewButton.setText(Integer.toString(this.getMineCount()));
         }
     }
-
-
-
 }

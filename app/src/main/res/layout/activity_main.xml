@@ -30,19 +30,21 @@
 
 
     </LinearLayout>
-    <LinearLayout
-        android:paddingTop="20dp"
-        android:id="@+id/boxLayout"
-        android:orientation="vertical"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/boxLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
 
-
-
-    </LinearLayout>
-
-
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

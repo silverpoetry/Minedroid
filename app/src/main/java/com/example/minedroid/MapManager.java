@@ -21,9 +21,9 @@ public class MapManager {
     public enum GameDifficulty {
         EASY, MIDDLE, HARD
     }
-public enum GameState{
+    public enum GameState{
         WAIT,PLAYING,OVER
-}
+    }
 
     static final int[][] mapsize = {{9, 9}, {16, 16}, {16, 30}};
     static final int[] minecount = {10, 40, 99};
@@ -35,7 +35,7 @@ public enum GameState{
     int buttonwidth;
     int leftblock ;
     GameState gameState = GameState.WAIT;
-     Activity context;
+    Activity context;
     public MapManager(Activity context, GameDifficulty difficulty) {
         this.context=context;
         this.difficulty = difficulty;
@@ -49,7 +49,6 @@ public enum GameState{
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
                 map[i][j].buttonState= MapItem.State.DEFAULT;
-
             }
         }
     }
@@ -57,13 +56,13 @@ public enum GameState{
     public static int b2i(boolean val) {
         return val ? 1 : 0;
     }
-    private int getPixelsFromDp(int  size){
+    private int getPixelsFromDp(int  size) {
 
         DisplayMetrics metrics =new DisplayMetrics();
 
         context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        return(size * metrics.densityDpi) / DisplayMetrics.DENSITY_DEFAULT;
+        return (size * metrics.densityDpi) / DisplayMetrics.DENSITY_DEFAULT;
 
     }
     public void generateMap() {
@@ -72,7 +71,6 @@ public enum GameState{
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j].setMine(false);
                 map[i][j].buttonState= MapItem.State.DEFAULT;
-
             }
         }
         //生成地雷编号
@@ -91,61 +89,52 @@ public enum GameState{
                 //统计非地雷块周围地雷数目
                 if (!map[i][j].isMine()) {
                     map[i][j].setMineCount(
-                            b2i(map[i-1][j + 1].isMine()) +
+                            b2i(map[i - 1][j + 1].isMine()) +
                             b2i(map[i][j + 1].isMine()) +
-                            b2i(map[i+1][j + 1].isMine()) +
-                            b2i(map[i-1][j ].isMine()) +
-                            b2i(map[i+1][j ].isMine()) +
-                            b2i(map[i-1][j-1 ].isMine()) +
+                            b2i(map[i + 1][j + 1].isMine()) +
+                            b2i(map[i - 1][j].isMine()) +
+                            b2i(map[i + 1][j].isMine()) +
+                            b2i(map[i - 1][j - 1].isMine()) +
                             b2i(map[i][j - 1].isMine()) +
-                            b2i(map[i+1][j - 1].isMine())
+                            b2i(map[i + 1][j - 1].isMine())
                     );
                 }
             }
-
         }
-
     }
-    void gameWin()
-    {
+
+    void gameWin() {
         Toast.makeText(context,"游戏胜利",Toast.LENGTH_SHORT ).show();
     }
-    void extendBlock(int x, int y)
-    {
+    void extendBlock(int x, int y) {
+
         if(x==0||y==0)return ;
         if(x==width+1||y==height+1)return;
         if(map[x][y].buttonState== MapItem.State.OPENED)return ;
 
-        if(!map[x][y].isMine())
-        {
+        if(!map[x][y].isMine()) {
             map[x][y].setState( MapItem.State.OPENED);
             leftblock--;
-            if(leftblock==0)
-            {
+            if(leftblock==0) {
                 gameWin();
             }
-            if(map[x][y].getMineCount()==0)
-            {
-                extendBlock(x-1,y-1);
-                extendBlock(x,y-1);
-                extendBlock(x+1,y-1);
-                extendBlock(x-1,y);
-                extendBlock(x+1,y);
-                extendBlock(x-1,y+1);
-                extendBlock(x,y+1);
-                extendBlock(x+1,y+1);
+            if(map[x][y].getMineCount()==0) {
+                extendBlock(x - 1,y - 1);
+                extendBlock(x,y - 1);
+                extendBlock(x + 1,y - 1);
+                extendBlock(x - 1, y);
+                extendBlock(x + 1, y);
+                extendBlock(x - 1,y + 1);
+                extendBlock(x,y + 1);
+                extendBlock(x + 1,y + 1);
             }
-        }else
-        {
+        } else {
             Toast.makeText(context,"游戏结束",Toast.LENGTH_SHORT ).show();
         }
-
-
     }
 
 
-    public void generateButtons()
-    {
+    public void generateButtons() {
         LinearLayout parent =(LinearLayout) context.findViewById(R.id.boxLayout);
         for (int j = 1; j <= height; j++) {
             LinearLayout ln = new LinearLayout(context);
@@ -186,8 +175,7 @@ public enum GameState{
                                                 // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
                                                  if(map[pos[0]][pos[1]].buttonState== MapItem.State.DEFAULT ) {
                                                      map[pos[0]][pos[1]].setState(MapItem.State.FLAGED);
-                                                 }else if(map[pos[0]][pos[1]].buttonState== MapItem.State.FLAGED)
-                                                 {
+                                                 } else if(map[pos[0]][pos[1]].buttonState== MapItem.State.FLAGED) {
                                                      map[pos[0]][pos[1]].setState(MapItem.State.DEFAULT);
                                                  }
                                                  return true;
@@ -199,8 +187,6 @@ public enum GameState{
             parent.addView(ln);
         }
     }
-
-
 }
 
 

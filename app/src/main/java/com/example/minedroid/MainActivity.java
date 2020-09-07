@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar!=null)actionBar.hide();
 
-        MapManager mapManager = new MapManager(this,MapManager.GameDifficulty.EASY);
+        MapManager mapManager = new MapManager(this,MapManager.GameDifficulty.HARD);
         mapManager.generateMap();
         mapManager.generateButtons();
 
