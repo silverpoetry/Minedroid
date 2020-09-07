@@ -106,7 +106,7 @@ public class MapManager {
 
         if(x == 0 || y == 0)return ;
         if(x == width + 1 || y == height + 1)return;
-        if(map[x][y].buttonState == MapItem.State.OPENED)return ;
+        if(map[x][y].buttonState != MapItem.State.DEFAULT)return;
 
         if(!map[x][y].isMine()) {
             map[x][y].setState(MapItem.State.OPENED);
@@ -115,20 +115,50 @@ public class MapManager {
                 gameWin();
             }
             if(map[x][y].getMineCount() == 0) {
-                extendBlockAt(x - 1,y - 1);
                 extendBlockAt(x,y - 1);
-                extendBlockAt(x + 1,y - 1);
+                extendBlockAt(x,y + 1);
                 extendBlockAt(x - 1, y);
                 extendBlockAt(x + 1, y);
+                extendBlockAt(x - 1,y - 1);
+                extendBlockAt(x + 1,y - 1);
                 extendBlockAt(x - 1,y + 1);
-                extendBlockAt(x,y + 1);
                 extendBlockAt(x + 1,y + 1);
             }
         } else {
             Toast.makeText(context,"游戏结束",Toast.LENGTH_SHORT ).show();
+            gameState = GameState.OVER;
         }
     }
 
+    void openBlockAround(int x, int y){
+        if(x == 0 || y == 0)return ;
+        if(x == width + 1 || y == height + 1)return;
+
+        MapItem block = map[x][y];
+        int flagCount = 0;
+
+        for(int i = x - 1; i <= x + 1; i++){
+            for(int j = y - 1; j <= y + 1; j++){
+                if(i==x&&j==y){
+                    break;
+                }
+                if(map[i][j].getButtonState()== MapItem.State.FLAGED){
+                    flagCount++;
+                }
+            }
+        }
+
+        if(block.getMineCount() == flagCount){
+            extendBlockAt(x,y - 1);
+            extendBlockAt(x,y + 1);
+            extendBlockAt(x - 1, y);
+            extendBlockAt(x + 1, y);
+            extendBlockAt(x - 1,y - 1);
+            extendBlockAt(x + 1,y - 1);
+            extendBlockAt(x - 1,y + 1);
+            extendBlockAt(x + 1,y + 1);
+        }
+    }
 
     public void generateButtons() {
         LinearLayout parent = (LinearLayout) context.findViewById(R.id.boxLayout);
@@ -155,12 +185,24 @@ public class MapManager {
                     public void onClick(View view) {
 
                         int[] pos = (int[])view.getTag();
+                        int x = pos[0];
+                        int y = pos[1];
                         switch (gameState){
                             case WAIT:
-                                while (map[pos[0]][pos[1]].isMine())generateMap();
+                                while (map[x][y].isMine())generateMap();
                                 gameState = GameState.PLAYING;
                             case PLAYING:
-                                extendBlockAt(pos[0],pos[1]);
+                                switch (map[x][y].getButtonState()){
+                                    case DEFAULT:
+                                        extendBlockAt(x, y);
+                                        break;
+                                    case OPENED:
+                                        openBlockAround(x, y);
+                                        break;
+                                    case FLAGED:
+                                        break;
+                                }
+                                extendBlockAt(x, y);
                                 break;
                             case OVER:
                                 break;
