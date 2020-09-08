@@ -1,6 +1,5 @@
-package com.b502.minedroid;
+package com.b502.minedroid.utils;
 
-import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
 
@@ -12,7 +11,7 @@ public class MapItem {
     boolean isMine ;
     int mineCount ;
     Button viewButton ;
-    State buttonState;
+     State buttonState;
 
     public State getButtonState() {
         return buttonState;

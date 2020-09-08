@@ -1,4 +1,4 @@
-package com.b502.minedroid;
+package com.b502.minedroid.utils;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.b502.minedroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class MapManager {
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
-                map[i][j].buttonState = MapItem.State.DEFAULT;
+                map[i][j].buttonState=MapItem.State.DEFAULT ;
             }
         }
     }
@@ -70,7 +72,7 @@ public class MapManager {
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j].setMine(false);
-                map[i][j].buttonState = MapItem.State.DEFAULT;
+                map[i][j].buttonState=MapItem.State.DEFAULT ;
             }
         }
         //生成地雷编号
@@ -133,7 +135,7 @@ public class MapManager {
 
         if (x == 0 || y == 0) return;
         if (x == width + 1 || y == height + 1) return;
-        if (map[x][y].buttonState != MapItem.State.DEFAULT) return;
+        if (map[x][y].getButtonState() != MapItem.State.DEFAULT) return;
 
         if (!map[x][y].isMine()) {
             map[x][y].setButtonState(MapItem.State.OPENED);
@@ -242,9 +244,9 @@ public class MapManager {
                         if (gameState == GameState.PLAYING) {
                             int[] pos = (int[]) view.getTag();
                             // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
-                            if (map[pos[0]][pos[1]].buttonState == MapItem.State.DEFAULT) {
+                            if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.DEFAULT) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
-                            } else if (map[pos[0]][pos[1]].buttonState == MapItem.State.FLAGED) {
+                            } else if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.FLAGED) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
                             }
                         }
@@ -252,7 +254,7 @@ public class MapManager {
                     }
                 });
                 ln.addView(b);
-                map[i][j].viewButton = b;
+                map[i][j].setViewButton(b);
             }
             parent.addView(ln);
         }
