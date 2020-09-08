@@ -1,10 +1,12 @@
 package com.b502.minedroid;
 
+import android.graphics.drawable.Drawable;
 import android.widget.Button;
+
 
 public class MapItem {
     public enum State{
-        DEFAULT,OPENED,FLAGED
+        DEFAULT,OPENED,FLAGED,BOOM,MISFLAGED
     }
     //地图项
     boolean isMine ;
@@ -53,6 +55,10 @@ public class MapItem {
             this.viewButton.setText("标");
         } else if(state == MapItem.State.OPENED) {
             this.viewButton.setText(Integer.toString(this.getMineCount()));
+        } else if(state == State.MISFLAGED) {
+            this.viewButton.setText("X");
+        } else if(state == State.BOOM) {
+            this.viewButton.setText("雷");
         }
     }
 }

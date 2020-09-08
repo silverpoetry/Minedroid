@@ -109,6 +109,21 @@ public class MapManager {
         }
         Toast.makeText(context,"游戏胜利",Toast.LENGTH_SHORT ).show();
     }
+    void gameLose() {
+        for(int i = 1; i <= width; i++) {
+            for(int j = 1; j <= height; j++) {
+                if(map[i][j].getButtonState() == MapItem.State.FLAGED && !map[i][j].isMine()) {
+                    map[i][j].setButtonState(MapItem.State.MISFLAGED);
+                } else if(map[i][j].getButtonState() == MapItem.State.DEFAULT && map[i][j].isMine()) {
+                    map[i][j].setButtonState(MapItem.State.BOOM);
+                }
+            }
+        }
+        Toast.makeText(context,"游戏结束",Toast.LENGTH_SHORT ).show();
+        gameState = GameState.OVER;
+        //todo: get score
+    }
+
     void extendBlockAt(int x, int y) {
 
         if(x == 0 || y == 0)return ;
@@ -132,8 +147,7 @@ public class MapManager {
                 extendBlockAt(x + 1,y + 1);
             }
         } else {
-            Toast.makeText(context,"游戏结束",Toast.LENGTH_SHORT ).show();
-            gameState = GameState.OVER;
+            gameLose();
         }
     }
 
