@@ -28,9 +28,8 @@ public class TimeManagementMaster {
         finished = true;
     }
 
-
     public void start() {
-        if (hangedup == true) {
+        if (hangedup) {
             hangedup = false;
             return;
         }
@@ -40,7 +39,7 @@ public class TimeManagementMaster {
             public void run() {
                 int ticker = 0;
                 while (!finished) {
-                    while (hangedup) ;
+                    while (hangedup);
                     if (ticker >= interval) {
                         ticker = 0;
                         hand.sendMessage(new Message());
@@ -48,14 +47,12 @@ public class TimeManagementMaster {
                     try {
                         Thread.sleep(100);
                     } catch (Exception e) {
-
                     }
                     ticker++;
                 }
             }
         });
         t.start();
-
     }
 
     public boolean isHangedup() {

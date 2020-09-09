@@ -1,5 +1,6 @@
 package com.b502.minedroid.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
@@ -84,7 +85,7 @@ public class MapManager {
         txtleftmines = context.findViewById(R.id.txtleftmines);
 
         timeManagementMaster = new TimeManagementMaster(new Handler() {
-
+            @SuppressLint("HandlerLeak")
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
