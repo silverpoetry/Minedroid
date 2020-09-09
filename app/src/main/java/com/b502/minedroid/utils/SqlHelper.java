@@ -27,29 +27,26 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE hardrecord (_id INTEGER PRIMARY KEY  AUTOINCREMENT, recordtime TEXT, costtime INTEGER);");
     }
 
-    public static  String getCurrentDate()
-    {
-        Calendar calendar= Calendar.getInstance();
+    public static String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm:ss");
         return sdf.format(calendar.getTime());
     }
 
-    public void addRecord(MapManager.GameDifficulty difficulty, String recordtime , int costtime )
-    {
+    public void addRecord(MapManager.GameDifficulty difficulty, String recordtime, int costtime) {
 
         SQLiteDatabase db = getWritableDatabase();
-        String sqlval = String.format( " (recordtime,costtime) VALUES ('%s',%s)",recordtime,Integer.toString(costtime));
-        switch (difficulty)
-        {
-            case  EASY:
-                    sqlval   ="INSERT INTO easyrecord"+sqlval;
+        String sqlval = String.format(" (recordtime,costtime) VALUES ('%s',%s)", recordtime, Integer.toString(costtime));
+        switch (difficulty) {
+            case EASY:
+                sqlval = "INSERT INTO easyrecord" + sqlval;
                 break;
 
             case MIDDLE:
-                sqlval   ="INSERT INTO middlerecord"+sqlval;
+                sqlval = "INSERT INTO middlerecord" + sqlval;
                 break;
             case HARD:
-                sqlval   ="INSERT INTO hardrecord"+sqlval;
+                sqlval = "INSERT INTO hardrecord" + sqlval;
                 break;
             default:
 
@@ -57,32 +54,31 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL(sqlval);
 
     }
-    public List<RecordItem>  getRecords(MapManager.GameDifficulty difficulty)
-    {
+
+    public List<RecordItem> getRecords(MapManager.GameDifficulty difficulty) {
         List<RecordItem> ret = new ArrayList<>();
         Cursor result;
-        switch (difficulty)
-        {
-            case  EASY:
-                 result=getReadableDatabase().rawQuery("SELECT * from easyrecord ORDER BY costtime",null);
+        switch (difficulty) {
+            case EASY:
+                result = getReadableDatabase().rawQuery("SELECT * from easyrecord ORDER BY costtime", null);
                 break;
             case MIDDLE:
-                result=getReadableDatabase().rawQuery("SELECT * from middlerecord ORDER BY costtime",null);
+                result = getReadableDatabase().rawQuery("SELECT * from middlerecord ORDER BY costtime", null);
                 break;
             case HARD:
             default:
-                result=getReadableDatabase().rawQuery("SELECT * from hardrecord ORDER BY costtime",null);
+                result = getReadableDatabase().rawQuery("SELECT * from hardrecord ORDER BY costtime", null);
                 break;
         }
         result.moveToFirst();
         while (!result.isAfterLast()) {
-            RecordItem r = new RecordItem(result.getString(1),result.getInt(2));
+            RecordItem r = new RecordItem(result.getString(1), result.getInt(2));
             ret.add(r);
             result.moveToNext();
         }
         result.close();
 
-        return   ret;
+        return ret;
     }
 
 

@@ -8,59 +8,53 @@ import java.nio.channels.IllegalSelectorException;
 
 
 public class TimeManagementMaster {
-    boolean hangedup=false ;
-    boolean finished = false ;
-    Thread t ;
-    Handler hand ;
+    boolean hangedup = false;
+    boolean finished = false;
+    Thread t;
+    Handler hand;
     int interval; //单位0.1s
-    public TimeManagementMaster(Handler hand,int interval)
-    {
-        this.hand= hand;
-        this.interval =interval;
+
+    public TimeManagementMaster(Handler hand, int interval) {
+        this.hand = hand;
+        this.interval = interval;
     }
 
     public void setInterval(int var) {
-         interval=var;
+        interval = var;
     }
 
-    public void pause()
-    {
-        hangedup=true;
-    }
-    public void stop()
-    {
-        finished=true;
-
+    public void pause() {
+        hangedup = true;
     }
 
+    public void stop() {
+        finished = true;
 
-    public void start()
-    {
-        if(hangedup==true)
-        {
-            hangedup =false ;
+    }
+
+
+    public void start() {
+        if (hangedup == true) {
+            hangedup = false;
             return;
         }
-        finished =false;
+        finished = false;
         t = new Thread(new Runnable() {
             @Override
             public void run() {
                 int ticker = 0;
-                while (!finished)
-                {
-                    while(hangedup);
-                    if(ticker>=interval){
-                        ticker=0;
+                while (!finished) {
+                    while (hangedup) ;
+                    if (ticker >= interval) {
+                        ticker = 0;
                         hand.sendMessage(new Message());
                     }
                     try {
                         Thread.sleep(100);
-                    }catch (Exception e )
-                    {
+                    } catch (Exception e) {
 
                     }
                     ticker++;
-
 
 
                 }

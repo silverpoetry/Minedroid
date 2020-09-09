@@ -3,32 +3,30 @@ package com.b502.minedroid.utils;
 import java.util.Date;
 
 public class RecordItem {
-    String date   ;
+    String date;
     int costtime;
-    public RecordItem(String date, int time)
-    {
 
-        this.date =date;
-        this.costtime =time;
+    public RecordItem(String date, int time) {
+
+        this.date = date;
+        this.costtime = time;
     }
-    public  RecordItem()
-    {
+
+    public RecordItem() {
 
     }
 
     @Override
     public String toString() {
-        String time ;
-        if(costtime>60)
-        {
-            time =Integer.toString(costtime/60)+"分"+Integer.toString(costtime%60)+"秒";
-        }else
-        {
-            time =Integer.toString(costtime%60)+"秒";
+        String time;
+        if (costtime > 60) {
+            time = Integer.toString(costtime / 60) + "分" + Integer.toString(costtime % 60) + "秒";
+        } else {
+            time = Integer.toString(costtime % 60) + "秒";
         }
         return
-                 date + ' ' +
-                "用时" + time;
+                date + ' ' +
+                        "用时" + time;
     }
 
     public String getDate() {

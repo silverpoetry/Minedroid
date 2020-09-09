@@ -22,21 +22,22 @@ public class gameActivity extends AppCompatActivity {
     private TextView txtTitle;
     private ImageButton btnBack;
     private Button btnSmile;
-    private  MapManager mapManager;
+    private MapManager mapManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         Intent i = getIntent();
-        final MapManager.GameDifficulty dif = MapManager.GameDifficulty.values()[i.getIntExtra("diff",0)];
+        final MapManager.GameDifficulty dif = MapManager.GameDifficulty.values()[i.getIntExtra("diff", 0)];
         //隐藏标题栏
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)actionBar.hide();
+        if (actionBar != null) actionBar.hide();
 
-        txtTitle =findViewById(R.id.titMain);
+        txtTitle = findViewById(R.id.titMain);
         btnBack = (ImageButton) findViewById(R.id.btnBack);
-        btnSmile =(Button)findViewById(R.id.btnsmile);
+        btnSmile = (Button) findViewById(R.id.btnsmile);
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,7 @@ public class gameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mapManager.getTimeManagementMaster().stop();
-                mapManager = new MapManager(gameActivity.this,dif);
+                mapManager = new MapManager(gameActivity.this, dif);
                 mapManager.generateButtons();
                 mapManager.generateMap();
 
@@ -58,7 +59,7 @@ public class gameActivity extends AppCompatActivity {
             }
         });
 
-         mapManager = new MapManager(this,dif);
+        mapManager = new MapManager(this, dif);
         mapManager.generateButtons();
         mapManager.generateMap();
     }

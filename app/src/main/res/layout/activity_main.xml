@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#f5f5f5"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
 
-        android:background="@color/colorPrimary"
+        android:layout_height="50dp"
 
-        android:layout_height="50dp">
+        android:background="@color/colorPrimary">
 
 
         <TextView
@@ -23,110 +24,114 @@
             android:layout_gravity="center"
             android:text="   Minedroid"
             android:textColor="#ffffff"
-            android:textSize="25dp">
-        </TextView>
-
+            android:textSize="25dp"></TextView>
 
 
     </LinearLayout>
-<ImageView
-    android:layout_marginTop="50dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@mipmap/sweeper"
-    android:layout_gravity="center">
 
-</ImageView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/sweeper">
+
+    </ImageView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Minedroid"
-
         android:gravity="center"
-        android:textSize="40dp"/>
+
+        android:text="Minedroid"
+        android:textSize="40dp" />
 
 
-
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
-
-          <Button
-              android:id="@+id/btneasy"
-              android:layout_width="150dp"
-              android:layout_height="wrap_content"
-              android:text="初级难度"
-              android:textSize="25dp"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              android:textColor="#5dac81"
-              android:background="#fafafa"></Button>
-      </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btneasy"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="#fafafa"
+            android:text="初级难度"
+            android:textColor="#5dac81"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <Button
             android:id="@+id/btnmiddle"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="#fafafa"
             android:text="中级难度"
+            android:textColor="#40cfb3"
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="#40cfb3"
-            android:background="#fafafa"></Button>
+            app:layout_constraintTop_toTopOf="parent"></Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <Button
             android:id="@+id/btnhard"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="#fafafa"
             android:text="高级难度"
-            android:textSize="25dp"
             android:textColor="#367386"
-            android:background="#fafafa"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            ></Button>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <Button
-            android:id="@+id/btnrecord"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="排行榜"
             android:textSize="25dp"
-            android:background="#fafafa"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btnrecord"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="#fafafa"
+            android:text="排行榜"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -135,6 +140,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-  </LinearLayout>
+</LinearLayout>
 
 

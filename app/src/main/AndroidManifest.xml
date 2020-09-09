@@ -13,7 +13,7 @@
         <activity
             android:name=".ToplistActivity"
             android:label="@string/title_activity_toplist"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".gameActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

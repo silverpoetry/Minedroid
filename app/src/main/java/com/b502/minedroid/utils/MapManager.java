@@ -40,12 +40,11 @@ public class MapManager {
 
     int count;
     int leftblock;
-    int lefflag ;
-
+    int lefflag;
 
 
     GameState gameState = GameState.WAIT;
-    MapItem[][] map ;
+    MapItem[][] map;
     GameDifficulty difficulty;
 
 
@@ -53,18 +52,16 @@ public class MapManager {
     private TextView txtTime;
     private Button btnsmile;
     private TextView txtleftmines;
-    int gametime ;
+    int gametime;
 
 
-
-    TimeManagementMaster timeManagementMaster ;
+    TimeManagementMaster timeManagementMaster;
 
     public TimeManagementMaster getTimeManagementMaster() {
         return timeManagementMaster;
     }
 
-    public void restart()
-    {
+    public void restart() {
 
         timeManagementMaster.stop();
 
@@ -74,31 +71,31 @@ public class MapManager {
         width = mapsize[this.difficulty.ordinal()][0];
         height = mapsize[this.difficulty.ordinal()][1];
         count = minecount[this.difficulty.ordinal()];
-        leftblock = width*height- count;
-        lefflag=count;
+        leftblock = width * height - count;
+        lefflag = count;
         buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
-        gametime  = 0 ;
+        gametime = 0;
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
-                map[i][j].buttonState=MapItem.State.DEFAULT ;
+                map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
 
         txtTime = (TextView) context.findViewById(R.id.txtTime);
-        btnsmile = (Button)  context.findViewById(R.id.btnsmile);
-        txtleftmines = (TextView)  context.findViewById(R.id.txtleftmines);
+        btnsmile = (Button) context.findViewById(R.id.btnsmile);
+        txtleftmines = (TextView) context.findViewById(R.id.txtleftmines);
 
-        timeManagementMaster = new TimeManagementMaster(new Handler(){
+        timeManagementMaster = new TimeManagementMaster(new Handler() {
 
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 gametime++;
 
-                txtTime.setText(String.format("%02d : %02d",(gametime/60),(gametime%60)));
+                txtTime.setText(String.format("%02d : %02d", (gametime / 60), (gametime % 60)));
             }
-        },10);
+        }, 10);
         timeManagementMaster.start();
 
         txtTime.setText("0:0");
@@ -112,30 +109,30 @@ public class MapManager {
         width = mapsize[this.difficulty.ordinal()][0];
         height = mapsize[this.difficulty.ordinal()][1];
         count = minecount[this.difficulty.ordinal()];
-        lefflag=count;
-        leftblock = width*height-count;
+        lefflag = count;
+        leftblock = width * height - count;
         buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
-        gametime  = 0 ;
+        gametime = 0;
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
-                map[i][j].buttonState=MapItem.State.DEFAULT ;
+                map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
 
         txtTime = (TextView) context.findViewById(R.id.txtTime);
-        btnsmile = (Button)  context.findViewById(R.id.btnsmile);
-        txtleftmines = (TextView)  context.findViewById(R.id.txtleftmines);
+        btnsmile = (Button) context.findViewById(R.id.btnsmile);
+        txtleftmines = (TextView) context.findViewById(R.id.txtleftmines);
 
-        timeManagementMaster = new TimeManagementMaster(new Handler(){
+        timeManagementMaster = new TimeManagementMaster(new Handler() {
 
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 gametime++;
-                txtTime.setText(String.format("%02d:%02d",(gametime/60),(gametime%60)));
+                txtTime.setText(String.format("%02d:%02d", (gametime / 60), (gametime % 60)));
             }
-        },10);
+        }, 10);
         timeManagementMaster.start();
 
         txtTime.setText("00:00");
@@ -162,7 +159,7 @@ public class MapManager {
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j].setMine(false);
-                map[i][j].buttonState=MapItem.State.DEFAULT ;
+                map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
         //生成地雷编号
@@ -207,7 +204,7 @@ public class MapManager {
                 }
             }
         }
-        MyApplication.Instance.sqlHelper.addRecord(difficulty,SqlHelper.getCurrentDate(),gametime);
+        MyApplication.Instance.sqlHelper.addRecord(difficulty, SqlHelper.getCurrentDate(), gametime);
         Toast.makeText(context, "游戏胜利", Toast.LENGTH_SHORT).show();
     }
 
@@ -345,11 +342,11 @@ public class MapManager {
                             if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.DEFAULT) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
                                 lefflag--;
-                               txtleftmines.setText(Integer.toString(lefflag));
+                                txtleftmines.setText(Integer.toString(lefflag));
                             } else if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.FLAGED) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
                                 lefflag++;
-                               txtleftmines.setText(Integer.toString(lefflag));
+                                txtleftmines.setText(Integer.toString(lefflag));
                             }
                         }
                         return true;

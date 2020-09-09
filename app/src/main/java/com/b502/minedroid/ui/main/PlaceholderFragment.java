@@ -57,15 +57,14 @@ public class PlaceholderFragment extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_toplist, container, false);
 //        final TextView textView = root.findViewById(R.id.section_label);
-        final ListView lstv =root.findViewById(R.id.lstv);
+        final ListView lstv = root.findViewById(R.id.lstv);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         List<RecordItem> lst;
 
-        switch (index)
-        {
+        switch (index) {
             case 1:
                 lst = MyApplication.Instance.sqlHelper.getRecords(MapManager.GameDifficulty.EASY);
                 break;
@@ -77,7 +76,7 @@ public class PlaceholderFragment extends Fragment {
                 lst = MyApplication.Instance.sqlHelper.getRecords(MapManager.GameDifficulty.HARD);
                 break;
         }
-        ArrayAdapter<RecordItem> arrayAdapter = new ArrayAdapter<>(root.getContext() ,android.R.layout.simple_list_item_1,lst);
+        ArrayAdapter<RecordItem> arrayAdapter = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, lst);
         lstv.setAdapter(arrayAdapter);
 //        pageViewModel.getText().observe(this, new Observer<String>() {
 //            @Override

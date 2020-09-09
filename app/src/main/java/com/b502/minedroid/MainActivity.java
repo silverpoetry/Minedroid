@@ -18,8 +18,8 @@ import com.b502.minedroid.utils.TimeManagementMaster;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
-    static  int num = 0 ;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    static int num = 0;
     private TextView titMain;
     private Button btneasy;
     private Button btnmiddle;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         //隐藏标题栏
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)actionBar.hide();
+        if (actionBar != null) actionBar.hide();
 
         titMain = (TextView) findViewById(R.id.titMain);
         btneasy = (Button) findViewById(R.id.btneasy);
@@ -50,26 +50,25 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Intent i ;
-        switch (view.getId())
-        {
+        Intent i;
+        switch (view.getId()) {
             case R.id.btneasy:
-                i = new Intent(MainActivity.this,gameActivity.class);
+                i = new Intent(MainActivity.this, gameActivity.class);
                 i.putExtra("diff", MapManager.GameDifficulty.EASY.ordinal());
                 startActivity(i);
                 break;
             case R.id.btnmiddle:
-                i = new Intent(this,gameActivity.class);
+                i = new Intent(this, gameActivity.class);
                 i.putExtra("diff", MapManager.GameDifficulty.MIDDLE.ordinal());
                 startActivity(i);
                 break;
             case R.id.btnhard:
-                i = new Intent(this,gameActivity.class);
+                i = new Intent(this, gameActivity.class);
                 i.putExtra("diff", MapManager.GameDifficulty.HARD.ordinal());
                 startActivity(i);
                 break;
             case R.id.btnrecord:
-                i = new Intent(this,ToplistActivity.class);
+                i = new Intent(this, ToplistActivity.class);
 //                i.putExtra("diff", MapManager.GameDifficulty.HARD.ordinal());
                 startActivity(i);
                 break;

@@ -6,13 +6,13 @@ import android.content.pm.ApplicationInfo;
 import com.b502.minedroid.utils.SqlHelper;
 
 public class MyApplication extends Application {
-    public static MyApplication Instance ;
+    public static MyApplication Instance;
     public SqlHelper sqlHelper;
-    public MyApplication()
-    {
+
+    public MyApplication() {
         super();
-        sqlHelper = new SqlHelper(this,"records.db",null,1);
-        Instance =this ;
+        sqlHelper = new SqlHelper(this, "records.db", null, 1);
+        Instance = this;
     }
 
     @Override
