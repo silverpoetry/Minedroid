@@ -1,13 +1,18 @@
 package com.b502.minedroid.utils;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.b502.minedroid.R;
 
@@ -26,31 +31,115 @@ public class MapManager {
 
     static final int[][] mapsize = {{9, 9}, {16, 16}, {16, 30}};
     static final int[] minecount = {10, 40, 99};
-    MapItem[][] map = new MapItem[50][50];
-    GameDifficulty difficulty;
+
+
     int width;
     int height;
-    int count;
     int buttonwidth;
-    int leftblock;
-    GameState gameState = GameState.WAIT;
-    Activity context;
 
-    public MapManager(Activity context, GameDifficulty difficulty) {
+    int count;
+    int leftblock;
+    int lefflag ;
+
+
+
+    GameState gameState = GameState.WAIT;
+    MapItem[][] map ;
+    GameDifficulty difficulty;
+
+
+    Activity context;
+    private TextView txtTime;
+    private Button btnsmile;
+    private TextView txtleftmines;
+    int gametime ;
+
+
+
+    TimeManagementMaster timeManagementMaster ;
+
+    public TimeManagementMaster getTimeManagementMaster() {
+        return timeManagementMaster;
+    }
+
+    public void restart()
+    {
+
+        timeManagementMaster.stop();
+
+        map = new MapItem[50][50];
         this.context = context;
         this.difficulty = difficulty;
         width = mapsize[this.difficulty.ordinal()][0];
         height = mapsize[this.difficulty.ordinal()][1];
         count = minecount[this.difficulty.ordinal()];
-        leftblock = height * width - count;
+        leftblock = width*height- count;
+        lefflag=count;
         buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
-
+        gametime  = 0 ;
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
                 map[i][j].buttonState=MapItem.State.DEFAULT ;
             }
         }
+
+        txtTime = (TextView) context.findViewById(R.id.txtTime);
+        btnsmile = (Button)  context.findViewById(R.id.btnsmile);
+        txtleftmines = (TextView)  context.findViewById(R.id.txtleftmines);
+
+        timeManagementMaster = new TimeManagementMaster(new Handler(){
+
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                gametime++;
+
+                txtTime.setText(String.format("%02d : %02d",(gametime/60),(gametime%60)));
+            }
+        },10);
+        timeManagementMaster.start();
+
+        txtTime.setText("0:0");
+        txtleftmines.setText(Integer.toString(lefflag));
+    }
+
+    public MapManager(Activity context, GameDifficulty difficulty) {
+        map = new MapItem[50][50];
+        this.context = context;
+        this.difficulty = difficulty;
+        width = mapsize[this.difficulty.ordinal()][0];
+        height = mapsize[this.difficulty.ordinal()][1];
+        count = minecount[this.difficulty.ordinal()];
+        lefflag=count;
+        leftblock = width*height-count;
+        buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
+        gametime  = 0 ;
+        for (int i = 0; i <= width + 1; i++) {
+            for (int j = 0; j <= height + 1; j++) {
+                map[i][j] = new MapItem(false);
+                map[i][j].buttonState=MapItem.State.DEFAULT ;
+            }
+        }
+
+        txtTime = (TextView) context.findViewById(R.id.txtTime);
+        btnsmile = (Button)  context.findViewById(R.id.btnsmile);
+        txtleftmines = (TextView)  context.findViewById(R.id.txtleftmines);
+
+        timeManagementMaster = new TimeManagementMaster(new Handler(){
+
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                gametime++;
+                txtTime.setText(String.format("%02d:%02d",(gametime/60),(gametime%60)));
+            }
+        },10);
+        timeManagementMaster.start();
+
+        txtTime.setText("00:00");
+        txtleftmines.setText(Integer.toString(lefflag));
+        btnsmile.setText(":)");
     }
 
     public static int b2i(boolean val) {
@@ -106,10 +195,14 @@ public class MapManager {
     }
 
     void gameWin() {
+        timeManagementMaster.stop();
         for (int i = 1; i <= width; i++) {
             for (int j = 1; j <= height; j++) {
                 if (map[i][j].getButtonState() == MapItem.State.DEFAULT) {
                     map[i][j].setButtonState(MapItem.State.FLAGED);
+
+                    lefflag--;
+                    txtleftmines.setText(Integer.toString(lefflag));
                 }
             }
         }
@@ -117,6 +210,7 @@ public class MapManager {
     }
 
     void gameLose() {
+        timeManagementMaster.stop();
         for (int i = 1; i <= width; i++) {
             for (int j = 1; j <= height; j++) {
                 if (map[i][j].getButtonState() == MapItem.State.FLAGED && !map[i][j].isMine()) {
@@ -126,6 +220,7 @@ public class MapManager {
                 }
             }
         }
+        btnsmile.setText(":(");
         Toast.makeText(context, "游戏结束", Toast.LENGTH_SHORT).show();
         gameState = GameState.OVER;
         //todo: get score
@@ -190,6 +285,7 @@ public class MapManager {
 
     public void generateButtons() {
         LinearLayout parent = (LinearLayout) context.findViewById(R.id.boxLayout);
+        parent.removeAllViews();
         for (int j = 1; j <= height; j++) {
             LinearLayout ln = new LinearLayout(context);
             ln.setOrientation(LinearLayout.HORIZONTAL);
@@ -246,8 +342,12 @@ public class MapManager {
                             // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
                             if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.DEFAULT) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
+                                lefflag--;
+                               txtleftmines.setText(Integer.toString(lefflag));
                             } else if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.FLAGED) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
+                                lefflag++;
+                               txtleftmines.setText(Integer.toString(lefflag));
                             }
                         }
                         return true;

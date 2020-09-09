@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="#FF21272B">
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:state_pressed="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
             <!-- 圆角深红色按钮 -->
             <solid android:color="#4D0A0A" />
-            <corners android:radius="8dip" />
+            <corners android:radius="4dp" />
         </shape>
     </item>
 
@@ -14,8 +14,9 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
             <!-- 圆角红色按钮 -->
             <solid android:color="#D9534F" />
-            <corners android:radius="8dip" />
+            <corners android:radius="3dp" />
         </shape>
     </item>
 
-</selector>
+
+</ripple>
