@@ -12,9 +12,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ToplistActivity"
-            android:label="@string/title_activity_toplist"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".gameActivity" />
+            android:label="TopList"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".gameActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

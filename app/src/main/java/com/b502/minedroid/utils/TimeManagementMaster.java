@@ -1,10 +1,7 @@
 package com.b502.minedroid.utils;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
-
-import java.nio.channels.IllegalSelectorException;
 
 
 public class TimeManagementMaster {

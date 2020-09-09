@@ -61,47 +61,6 @@ public class MapManager {
         return timeManagementMaster;
     }
 
-    public void restart() {
-
-        timeManagementMaster.stop();
-
-        map = new MapItem[50][50];
-        this.context = context;
-        this.difficulty = difficulty;
-        width = mapsize[this.difficulty.ordinal()][0];
-        height = mapsize[this.difficulty.ordinal()][1];
-        count = minecount[this.difficulty.ordinal()];
-        leftblock = width * height - count;
-        lefflag = count;
-        buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
-        gametime = 0;
-        for (int i = 0; i <= width + 1; i++) {
-            for (int j = 0; j <= height + 1; j++) {
-                map[i][j] = new MapItem(false);
-                map[i][j].buttonState = MapItem.State.DEFAULT;
-            }
-        }
-
-        txtTime = (TextView) context.findViewById(R.id.txtTime);
-        btnsmile = (Button) context.findViewById(R.id.btnsmile);
-        txtleftmines = (TextView) context.findViewById(R.id.txtleftmines);
-
-        timeManagementMaster = new TimeManagementMaster(new Handler() {
-
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                gametime++;
-
-                txtTime.setText(String.format("%02d : %02d", (gametime / 60), (gametime % 60)));
-            }
-        }, 10);
-        timeManagementMaster.start();
-
-        txtTime.setText("0:0");
-        txtleftmines.setText(Integer.toString(lefflag));
-    }
-
     public MapManager(Activity context, GameDifficulty difficulty) {
         map = new MapItem[50][50];
         this.context = context;
@@ -133,7 +92,7 @@ public class MapManager {
                 txtTime.setText(String.format("%02d:%02d", (gametime / 60), (gametime % 60)));
             }
         }, 10);
-        timeManagementMaster.start();
+        //timeManagementMaster.start();
 
         txtTime.setText("00:00");
         txtleftmines.setText(Integer.toString(lefflag));
@@ -313,6 +272,7 @@ public class MapManager {
                         switch (gameState) {
                             case WAIT:
                                 while (map[x][y].isMine()) generateMap();
+                                timeManagementMaster.start();
                                 gameState = GameState.PLAYING;
                             case PLAYING:
                                 switch (map[x][y].getButtonState()) {

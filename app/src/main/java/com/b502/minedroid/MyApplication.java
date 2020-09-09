@@ -1,7 +1,6 @@
 package com.b502.minedroid;
 
 import android.app.Application;
-import android.content.pm.ApplicationInfo;
 
 import com.b502.minedroid.utils.SqlHelper;
 

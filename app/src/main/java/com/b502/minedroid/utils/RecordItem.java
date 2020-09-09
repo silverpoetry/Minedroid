@@ -1,7 +1,5 @@
 package com.b502.minedroid.utils;
 
-import java.util.Date;
-
 public class RecordItem {
     String date;
     int costtime;
