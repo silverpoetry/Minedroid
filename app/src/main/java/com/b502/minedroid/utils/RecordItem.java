@@ -7,11 +7,29 @@ public class RecordItem {
     int costtime;
     public RecordItem(String date, int time)
     {
-        Date d = new Date();
+
         this.date =date;
         this.costtime =time;
     }
+    public  RecordItem()
+    {
 
+    }
+
+    @Override
+    public String toString() {
+        String time ;
+        if(costtime>60)
+        {
+            time =Integer.toString(costtime/60)+"分"+Integer.toString(costtime%60)+"秒";
+        }else
+        {
+            time =Integer.toString(costtime%60)+"秒";
+        }
+        return
+                 date + ' ' +
+                "用时" + time;
+    }
 
     public String getDate() {
         return date;

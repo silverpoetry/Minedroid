@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Minedroid</string>
+    <string name="title_activity_toplist">ToplistActivity</string>
+    <string name="tab_text_1">初级</string>
+    <string name="tab_text_2">中级</string>
+    <string name="tab_text_3">高级</string>
 </resources>

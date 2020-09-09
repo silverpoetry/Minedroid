@@ -18,6 +18,7 @@ public class MapItem {
     }
 
 
+
     public boolean isMine() {
         return isMine;
     }

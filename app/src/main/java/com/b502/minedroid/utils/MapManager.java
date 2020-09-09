@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.b502.minedroid.MyApplication;
 import com.b502.minedroid.R;
 
 import java.util.ArrayList;
@@ -206,6 +207,7 @@ public class MapManager {
                 }
             }
         }
+        MyApplication.Instance.sqlHelper.addRecord(difficulty,SqlHelper.getCurrentDate(),gametime);
         Toast.makeText(context, "游戏胜利", Toast.LENGTH_SHORT).show();
     }
 

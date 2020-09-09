@@ -58,15 +58,6 @@ public class gameActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-        SqlHelper sqlHelper =new SqlHelper(this,"records.db",null,1);
-        sqlHelper.addRecord(MapManager.GameDifficulty.EASY,SqlHelper.getCurrentDate(),100);
-        List<RecordItem> lst =  sqlHelper.getRecords(MapManager.GameDifficulty.EASY);
-
-
-
          mapManager = new MapManager(this,dif);
         mapManager.generateButtons();
         mapManager.generateMap();

@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 startActivity(i);
                 break;
             case R.id.btnrecord:
+                i = new Intent(this,ToplistActivity.class);
+//                i.putExtra("diff", MapManager.GameDifficulty.HARD.ordinal());
+                startActivity(i);
                 break;
             default:
                 break;
