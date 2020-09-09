@@ -79,9 +79,9 @@ public class MapManager {
             }
         }
 
-        txtTime = (TextView) context.findViewById(R.id.txtTime);
-        btnsmile = (Button) context.findViewById(R.id.btnsmile);
-        txtleftmines = (TextView) context.findViewById(R.id.txtleftmines);
+        txtTime = context.findViewById(R.id.txtTime);
+        btnsmile = context.findViewById(R.id.btnsmile);
+        txtleftmines = context.findViewById(R.id.txtleftmines);
 
         timeManagementMaster = new TimeManagementMaster(new Handler() {
 
@@ -92,7 +92,6 @@ public class MapManager {
                 txtTime.setText(String.format("%02d:%02d", (gametime / 60), (gametime % 60)));
             }
         }, 10);
-        //timeManagementMaster.start();
 
         txtTime.setText("00:00");
         txtleftmines.setText(Integer.toString(lefflag));
@@ -242,7 +241,7 @@ public class MapManager {
     }
 
     public void generateButtons() {
-        LinearLayout parent = (LinearLayout) context.findViewById(R.id.boxLayout);
+        LinearLayout parent = context.findViewById(R.id.boxLayout);
         parent.removeAllViews();
         for (int j = 1; j <= height; j++) {
             LinearLayout ln = new LinearLayout(context);

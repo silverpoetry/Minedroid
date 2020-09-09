@@ -26,7 +26,6 @@ public class TimeManagementMaster {
 
     public void stop() {
         finished = true;
-
     }
 
 
@@ -52,8 +51,6 @@ public class TimeManagementMaster {
 
                     }
                     ticker++;
-
-
                 }
             }
         });

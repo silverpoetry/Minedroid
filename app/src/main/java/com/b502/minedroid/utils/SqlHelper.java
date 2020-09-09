@@ -34,7 +34,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     public void addRecord(MapManager.GameDifficulty difficulty, String recordtime, int costtime) {
 
         SQLiteDatabase db = getWritableDatabase();
-        String sqlval = String.format(" (recordtime,costtime) VALUES ('%s',%s)", recordtime, Integer.toString(costtime));
+        String sqlval = String.format(" (recordtime,costtime) VALUES ('%s',%s)", recordtime, costtime);
         switch (difficulty) {
             case EASY:
                 sqlval = "INSERT INTO easyrecord" + sqlval;

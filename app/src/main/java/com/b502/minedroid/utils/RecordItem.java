@@ -18,9 +18,9 @@ public class RecordItem {
     public String toString() {
         String time;
         if (costtime > 60) {
-            time = Integer.toString(costtime / 60) + "分" + Integer.toString(costtime % 60) + "秒";
+            time = costtime / 60 + "分" + costtime % 60 + "秒";
         } else {
-            time = Integer.toString(costtime % 60) + "秒";
+            time = costtime % 60 + "秒";
         }
         return
                 date + ' ' +
