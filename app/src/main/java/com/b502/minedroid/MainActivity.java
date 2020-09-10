@@ -39,17 +39,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i;
         switch (view.getId()) {
             case R.id.btneasy:
-                i = new Intent(this, gameActivity.class);
+                i = new Intent(this, GameActivity.class);
                 i.putExtra("diff", MapManager.GameDifficulty.EASY.ordinal());
                 startActivity(i);
                 break;
             case R.id.btnmiddle:
-                i = new Intent(this, gameActivity.class);
+                i = new Intent(this, GameActivity.class);
                 i.putExtra("diff", MapManager.GameDifficulty.MIDDLE.ordinal());
                 startActivity(i);
                 break;
             case R.id.btnhard:
-                i = new Intent(this, gameActivity.class);
+                i = new Intent(this, GameActivity.class);
                 i.putExtra("diff", MapManager.GameDifficulty.HARD.ordinal());
                 startActivity(i);
                 break;

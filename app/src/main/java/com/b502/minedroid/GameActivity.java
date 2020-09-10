@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.b502.minedroid.utils.MapManager;
 
-public class gameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnSmile;
     private MapManager mapManager;
