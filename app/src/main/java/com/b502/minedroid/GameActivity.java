@@ -49,6 +49,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onPause() {
+        mapManager.getTimeManagementMaster().pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mapManager.getTimeManagementMaster().isHangedup()) {
+            mapManager.getTimeManagementMaster().start();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         mapManager.getTimeManagementMaster().stop();
         super.onDestroy();
