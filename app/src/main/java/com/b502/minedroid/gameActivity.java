@@ -47,4 +47,10 @@ public class gameActivity extends AppCompatActivity implements View.OnClickListe
         mapManager.generateButtons();
         mapManager.generateMap();
     }
+
+    @Override
+    protected void onDestroy() {
+        mapManager.getTimeManagementMaster().stop();
+        super.onDestroy();
+    }
 }

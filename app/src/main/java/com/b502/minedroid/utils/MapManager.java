@@ -41,7 +41,7 @@ public class MapManager {
 
     int count;
     int leftblock;
-    int lefflag;
+    int leftflag;
 
 
     GameState gameState = GameState.WAIT;
@@ -69,7 +69,7 @@ public class MapManager {
         width = mapsize[this.difficulty.ordinal()][0];
         height = mapsize[this.difficulty.ordinal()][1];
         count = minecount[this.difficulty.ordinal()];
-        lefflag = count;
+        leftflag = count;
         leftblock = width * height - count;
         buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
         gametime = 0;
@@ -95,7 +95,7 @@ public class MapManager {
         }, 10);
 
         txtTime.setText("00:00");
-        txtleftmines.setText(Integer.toString(lefflag));
+        txtleftmines.setText(Integer.toString(leftflag));
         btnsmile.setText(":)");
     }
 
@@ -158,8 +158,8 @@ public class MapManager {
                 if (map[i][j].getButtonState() == MapItem.State.DEFAULT) {
                     map[i][j].setButtonState(MapItem.State.FLAGED);
 
-                    lefflag--;
-                    txtleftmines.setText(Integer.toString(lefflag));
+                    leftflag--;
+                    txtleftmines.setText(Integer.toString(leftflag));
                 }
             }
         }
@@ -210,6 +210,41 @@ public class MapManager {
             gameLose();
         }
     }
+
+    //gaoshiqing
+//    void flagBlockAround(int x, int y) {
+//        if (x == 0 || y == 0) return;
+//        if (x == width + 1 || y == height + 1) return;
+//
+//        MapItem block = map[x][y];
+//        int Count = 0;
+//        for (int i = x - 1; i <= x + 1; i++) {
+//            for (int j = y - 1; j <= y + 1; j++) {
+//                if (i == x && j == y) {
+//                    continue;
+//                }
+//                MapItem.State state = map[i][j].getButtonState();
+//                if (state == MapItem.State.FLAGED
+//                        || state == MapItem.State.DEFAULT) {
+//                    Count++;
+//                }
+//            }
+//        }
+//        if (block.getMineCount() == Count) {
+//            for (int i = x - 1; i <= x + 1; i++) {
+//                for (int j = y - 1; j <= y + 1; j++) {
+//                    if ((i == x && j == y) || x == 0 || y == 0 || x == width + 1 || y == height + 1) {
+//                        continue;
+//                    }
+//                    if (map[i][j].getButtonState() == MapItem.State.DEFAULT) {
+//                        map[i][j].setButtonState(MapItem.State.FLAGED);
+//                        leftflag--;
+//                    }
+//                }
+//            }
+//        }
+//        txtleftmines.setText(Integer.toString(leftflag));
+//    }
 
     void openBlockAround(int x, int y) {
         if (x == 0 || y == 0) return;
@@ -281,6 +316,7 @@ public class MapManager {
                                         break;
                                     case OPENED:
                                         openBlockAround(x, y);
+//                                        flagBlockAround(x, y);//gaoshiqing
                                         break;
                                     case FLAGED:
                                         break;
@@ -301,12 +337,12 @@ public class MapManager {
                             // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
                             if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.DEFAULT) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
-                                lefflag--;
-                                txtleftmines.setText(Integer.toString(lefflag));
+                                leftflag--;
+                                txtleftmines.setText(Integer.toString(leftflag));
                             } else if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.FLAGED) {
                                 map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
-                                lefflag++;
-                                txtleftmines.setText(Integer.toString(lefflag));
+                                leftflag++;
+                                txtleftmines.setText(Integer.toString(leftflag));
                             }
                         }
                         return true;
