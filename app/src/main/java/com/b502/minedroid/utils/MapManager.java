@@ -34,7 +34,6 @@ public class MapManager {
     static final int[][] mapsize = {{9, 9}, {16, 16}, {16, 30}};
     static final int[] minecount = {10, 40, 99};
 
-
     int width;
     int height;
     int buttonwidth;
@@ -43,18 +42,15 @@ public class MapManager {
     int leftblock;
     int leftflag;
 
-
     GameState gameState = GameState.WAIT;
     MapItem[][] map;
     GameDifficulty difficulty;
-
 
     Activity context;
     private TextView txtTime;
     private Button btnsmile;
     private TextView txtleftmines;
     int gametime;
-
 
     TimeManagementMaster timeManagementMaster;
 
@@ -76,7 +72,7 @@ public class MapManager {
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
-                map[i][j].buttonState = MapItem.State.DEFAULT;
+                //map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
 

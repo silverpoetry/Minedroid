@@ -12,12 +12,11 @@ public class MapItem {
     boolean isMine;
     int mineCount;
     Button viewButton;
-    State buttonState;
+    State buttonState = State.DEFAULT;
 
     public State getButtonState() {
         return buttonState;
     }
-
 
     public boolean isMine() {
         return isMine;
