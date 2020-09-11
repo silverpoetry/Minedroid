@@ -58,6 +58,19 @@ public class MapManager {
         return timeManagementMaster;
     }
 
+    public void reset() {
+        timeManagementMaster.stop();
+        gameState = GameState.WAIT;
+        count = minecount[this.difficulty.ordinal()];
+        leftflag = count;
+        leftblock = width * height - count;
+        gametime = 0;
+        txtTime.setText("00:00");
+        txtleftmines.setText(Integer.toString(leftflag));
+        btnsmile.setText(":)");
+        generateMap();
+    }
+
     public MapManager(Activity context, GameDifficulty difficulty) {
         map = new MapItem[50][50];
         this.context = context;
@@ -69,13 +82,12 @@ public class MapManager {
         leftblock = width * height - count;
         buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
         gametime = 0;
-        for (int i = 0; i <= width + 1; i++) {
-            for (int j = 0; j <= height + 1; j++) {
-                map[i][j] = new MapItem(false);
-                //map[i][j].buttonState = MapItem.State.DEFAULT;
-            }
-        }
-
+//        for (int i = 0; i <= width + 1; i++) {
+//            for (int j = 0; j <= height + 1; j++) {
+//                map[i][j] = new MapItem(false);
+//                //map[i][j].buttonState = MapItem.State.DEFAULT;
+//            }
+//        }
         txtTime = context.findViewById(R.id.txtTime);
         btnsmile = context.findViewById(R.id.btnsmile);
         txtleftmines = context.findViewById(R.id.txtleftmines);
@@ -93,6 +105,8 @@ public class MapManager {
         txtTime.setText("00:00");
         txtleftmines.setText(Integer.toString(leftflag));
         btnsmile.setText(":)");
+        generateButtons();
+        generateMap();
     }
 
     public static int b2i(boolean val) {
@@ -109,12 +123,12 @@ public class MapManager {
 
     }
 
-    public void generateMap() {
+    void generateMap() {
 
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j].setMine(false);
-                map[i][j].buttonState = MapItem.State.DEFAULT;
+                map[i][j].setButtonState(MapItem.State.DEFAULT);
             }
         }
         //生成地雷编号
@@ -272,7 +286,13 @@ public class MapManager {
         }
     }
 
-    public void generateButtons() {
+    void generateButtons() {
+        for (int i = 0; i <= width + 1; i++) {
+            for (int j = 0; j <= height + 1; j++) {
+                map[i][j] = new MapItem(false);
+                //map[i][j].buttonState = MapItem.State.DEFAULT;
+            }
+        }
         LinearLayout parent = context.findViewById(R.id.boxLayout);
         parent.removeAllViews();
         for (int j = 1; j <= height; j++) {
@@ -349,6 +369,12 @@ public class MapManager {
             }
             parent.addView(ln);
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        timeManagementMaster.stop();
+        super.finalize();
     }
 }
 

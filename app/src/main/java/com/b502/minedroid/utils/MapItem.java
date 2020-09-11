@@ -1,6 +1,12 @@
 package com.b502.minedroid.utils;
 
+import android.graphics.drawable.Drawable;
+import android.util.AndroidException;
 import android.widget.Button;
+
+import androidx.core.content.ContextCompat;
+
+import com.b502.minedroid.R;
 
 
 public class MapItem {
@@ -48,20 +54,24 @@ public class MapItem {
 
     public void setButtonState(MapItem.State state) {
         this.buttonState = state;
-        if (state == MapItem.State.DEFAULT) {
-            this.viewButton.setText("");
-        } else if (state == MapItem.State.FLAGED) {
-            this.viewButton.setText("标");
-        } else if (state == MapItem.State.OPENED) {
-            int mineCount = this.getMineCount();
-            if (mineCount != 0) {
-                this.viewButton.setText(Integer.toString(mineCount));
+        if (this.viewButton != null) {
+            if (state == MapItem.State.DEFAULT) {
+                this.viewButton.setText("");
+                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), android.R.drawable.btn_default);
+                this.viewButton.setBackground(drawable);
+            } else if (state == MapItem.State.FLAGED) {
+                this.viewButton.setText("标");
+            } else if (state == MapItem.State.OPENED) {
+                int mineCount = this.getMineCount();
+                if (mineCount != 0) {
+                    this.viewButton.setText(Integer.toString(mineCount));
+                }
+                this.viewButton.setBackgroundColor(0x00000000);
+            } else if (state == State.MISFLAGED) {
+                this.viewButton.setText("X");
+            } else if (state == State.BOOM) {
+                this.viewButton.setText("雷");
             }
-            this.viewButton.setBackgroundColor(0x00000000);
-        } else if (state == State.MISFLAGED) {
-            this.viewButton.setText("X");
-        } else if (state == State.BOOM) {
-            this.viewButton.setText("雷");
         }
     }
 }

@@ -26,20 +26,28 @@ public class TimeManagementMaster {
 
     public void stop() {
         finished = true;
+        hangedup = false;
+        if(t!=null){
+            try {
+                t.join();;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void start() {
         if (hangedup) {
             hangedup = false;
-            return;
+            //return;
         }
         finished = false;
         t = new Thread(new Runnable() {
             @Override
             public void run() {
                 int ticker = 0;
-                while (!finished) {
-                    while (hangedup);
+                while (!finished&&!hangedup) {
+                    //while (hangedup);
                     if (ticker >= interval) {
                         ticker = 0;
                         hand.sendMessage(new Message());
@@ -89,5 +97,11 @@ public class TimeManagementMaster {
 
     public void setHand(Handler hand) {
         this.hand = hand;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        stop();
+        super.finalize();
     }
 }
