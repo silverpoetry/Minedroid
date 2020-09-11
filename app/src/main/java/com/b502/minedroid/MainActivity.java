@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnhard = findViewById(R.id.btnhard);
         btnrecord = findViewById(R.id.btnrecord);
 
+
         btneasy.setOnClickListener(this);
         btnmiddle.setOnClickListener(this);
         btnhard.setOnClickListener(this);
