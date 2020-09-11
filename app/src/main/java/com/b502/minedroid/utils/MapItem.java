@@ -6,6 +6,8 @@ import android.widget.Button;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
+import com.b502.minedroid.R;
+
 
 public class MapItem {
     public enum State {
@@ -55,7 +57,7 @@ public class MapItem {
         if (this.viewButton != null) {
             if (state == MapItem.State.DEFAULT) {
                 this.viewButton.setText("");
-                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), android.R.drawable.btn_default);
+                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), R.drawable.ripple_bg);
                 this.viewButton.setBackground(drawable);
             } else if (state == MapItem.State.FLAGED) {
                 this.viewButton.setText("标");
