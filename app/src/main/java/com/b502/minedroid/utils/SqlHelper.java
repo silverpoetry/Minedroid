@@ -1,5 +1,6 @@
 package com.b502.minedroid.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,7 +28,7 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     public static String getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm:ss");
         return sdf.format(calendar.getTime());
     }
 
@@ -39,7 +40,6 @@ public class SqlHelper extends SQLiteOpenHelper {
             case EASY:
                 sqlval = "INSERT INTO easyrecord" + sqlval;
                 break;
-
             case MIDDLE:
                 sqlval = "INSERT INTO middlerecord" + sqlval;
                 break;
@@ -47,10 +47,9 @@ public class SqlHelper extends SQLiteOpenHelper {
                 sqlval = "INSERT INTO hardrecord" + sqlval;
                 break;
             default:
-
+                return;
         }
         db.execSQL(sqlval);
-
     }
 
     public List<RecordItem> getRecords(MapManager.GameDifficulty difficulty) {
@@ -75,7 +74,6 @@ public class SqlHelper extends SQLiteOpenHelper {
             result.moveToNext();
         }
         result.close();
-
         return ret;
     }
 
@@ -83,6 +81,5 @@ public class SqlHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO 更改数据库版本的操作
-
     }
 }

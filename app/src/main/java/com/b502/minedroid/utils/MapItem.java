@@ -2,8 +2,6 @@ package com.b502.minedroid.utils;
 
 import android.widget.Button;
 
-import com.b502.minedroid.R;
-
 
 public class MapItem {
     public enum State {

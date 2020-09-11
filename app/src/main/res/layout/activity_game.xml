@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".gameActivity">
+    tools:context=".GameActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,7 +27,6 @@
 
         <Button
             android:id="@+id/btnsmile"
-
             android:layout_width="43dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"

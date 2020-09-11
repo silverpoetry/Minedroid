@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.b502.minedroid.utils.MapManager;
 
-public class gameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnSmile;
     private MapManager mapManager;
@@ -42,10 +42,26 @@ public class gameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        if (mapManager != null) {
+            mapManager.getTimeManagementMaster().stop();
+        }
         mapManager = new MapManager(this, dif);
-        mapManager.getTimeManagementMaster().stop();
         mapManager.generateButtons();
         mapManager.generateMap();
+    }
+
+    @Override
+    protected void onPause() {
+        mapManager.getTimeManagementMaster().pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mapManager.getTimeManagementMaster().isHangedup()) {
+            mapManager.getTimeManagementMaster().start();
+        }
     }
 
     @Override
