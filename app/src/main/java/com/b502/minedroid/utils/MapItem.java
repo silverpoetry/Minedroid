@@ -1,12 +1,10 @@
 package com.b502.minedroid.utils;
 
 import android.graphics.drawable.Drawable;
-import android.util.AndroidException;
 import android.widget.Button;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
-
-import com.b502.minedroid.R;
 
 
 public class MapItem {
@@ -17,7 +15,7 @@ public class MapItem {
     //地图项
     boolean isMine;
     int mineCount;
-    Button viewButton;
+    AppCompatButton viewButton;
     State buttonState = State.DEFAULT;
 
     public State getButtonState() {
@@ -44,7 +42,7 @@ public class MapItem {
         this.mineCount = mineCount;
     }
 
-    public void setViewButton(Button viewButton) {
+    public void setViewButton(AppCompatButton viewButton) {
         this.viewButton = viewButton;
     }
 

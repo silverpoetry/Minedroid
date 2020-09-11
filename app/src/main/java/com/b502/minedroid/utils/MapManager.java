@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.b502.minedroid.MyApplication;
 import com.b502.minedroid.R;
@@ -305,7 +306,7 @@ public class MapManager {
             ln.setLayoutParams(ll);
 
             for (int i = 1; i <= width; i++) {
-                Button b = new Button(context);
+                AppCompatButton b = new AppCompatButton(context);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(getPixelsFromDp(buttonwidth), getPixelsFromDp(buttonwidth + 5));
                 lp.setMargins(-6, -6, 0, 0);
                 b.setLayoutParams(lp);
