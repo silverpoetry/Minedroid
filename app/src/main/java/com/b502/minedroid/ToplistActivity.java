@@ -33,5 +33,4 @@ public class ToplistActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

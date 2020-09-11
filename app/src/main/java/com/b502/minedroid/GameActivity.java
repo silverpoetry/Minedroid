@@ -42,8 +42,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        if (mapManager != null) {
+            mapManager.getTimeManagementMaster().stop();
+        }
         mapManager = new MapManager(this, dif);
-        mapManager.getTimeManagementMaster().stop();
         mapManager.generateButtons();
         mapManager.generateMap();
     }
