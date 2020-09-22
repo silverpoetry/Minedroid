@@ -57,7 +57,7 @@ public class MapItem {
         if (this.viewButton != null) {
             if (state == MapItem.State.DEFAULT) {
                 this.viewButton.setText("");
-                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), R.drawable.ripple_bg);
+                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), androidx.appcompat.R.drawable.abc_btn_colored_material);
                 this.viewButton.setBackground(drawable);
             } else if (state == MapItem.State.FLAGED) {
                 this.viewButton.setText("标");
