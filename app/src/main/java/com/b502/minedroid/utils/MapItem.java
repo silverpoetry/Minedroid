@@ -59,6 +59,8 @@ public class MapItem {
                 this.viewButton.setText("");
                 Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), androidx.appcompat.R.drawable.abc_btn_colored_material);
                 this.viewButton.setBackground(drawable);
+                int tmp = this.viewButton.getCompoundDrawablePadding()+15;
+                this.viewButton.setPadding(tmp, tmp, tmp, tmp);
             } else if (state == MapItem.State.FLAGED) {
                 this.viewButton.setText("标");
             } else if (state == MapItem.State.OPENED) {

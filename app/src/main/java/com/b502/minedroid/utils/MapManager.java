@@ -307,11 +307,10 @@ public class MapManager {
 
             for (int i = 1; i <= width; i++) {
                 AppCompatButton b = new AppCompatButton(context);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(getPixelsFromDp(buttonwidth), getPixelsFromDp(buttonwidth + 5));
-                lp.setMargins(-6, -6, 0, 0);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(getPixelsFromDp(buttonwidth - 2), getPixelsFromDp(buttonwidth + 3));
                 b.setLayoutParams(lp);
                 b.setTag(new int[]{i, j});
-                b.setPadding(1, 1, 1, 1);
+                //b.setPadding(1, 1, 1, 1);
                 // if (map[i][j].isMine)b.setText("雷");
                 //   else b.setText(Integer.toString(map[i][j].getMineCount()));
                 b.setOnClickListener(new View.OnClickListener() {
