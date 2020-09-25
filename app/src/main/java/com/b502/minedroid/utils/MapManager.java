@@ -168,7 +168,6 @@ public class MapManager {
             for (int j = 1; j <= height; j++) {
                 if (map[i][j].getButtonState() == MapItem.State.DEFAULT) {
                     map[i][j].setButtonState(MapItem.State.FLAGED);
-
                     leftflag--;
                     txtleftmines.setText(Integer.toString(leftflag));
                 }
@@ -176,6 +175,7 @@ public class MapManager {
         }
         MyApplication.Instance.sqlHelper.addRecord(difficulty, SqlHelper.getCurrentDate(), gametime);
         Toast.makeText(context, "游戏胜利", Toast.LENGTH_SHORT).show();
+        gameState = GameState.OVER;
     }
 
     void gameLose() {
@@ -322,7 +322,7 @@ public class MapManager {
                         int y = pos[1];
                         switch (gameState) {
                             case WAIT:
-                                while (map[x][y].isMine()) generateMap();
+                                while (map[x][y].isMine()||map[x][y].mineCount!=0) generateMap();
                                 timeManagementMaster.start();
                                 gameState = GameState.PLAYING;
                             case PLAYING:
@@ -332,7 +332,7 @@ public class MapManager {
                                         break;
                                     case OPENED:
                                         openBlockAround(x, y);
-//                                        flagBlockAround(x, y);//gaoshiqing
+                                        //flagBlockAround(x, y);//gaoshiqing
                                         break;
                                     case FLAGED:
                                         break;

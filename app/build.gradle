@@ -8,8 +8,8 @@ android {
         applicationId "com.b502.minedroid"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 2
-        versionName "0.0.3-beta"
+        versionCode 3
+        versionName "0.0.4-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
