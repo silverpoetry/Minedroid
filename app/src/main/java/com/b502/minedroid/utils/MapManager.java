@@ -287,6 +287,16 @@ public class MapManager {
         }
     }
 
+//    void adjustMap(int x, int y) {
+//        if (x >= 1 || x <= width || y >= 1 || y <= height) {
+//            return;
+//        }
+//        int tmpx = x, tmpy = y;
+//        for (int i = 1; i < 20; i++) {
+//
+//        }
+//    }
+
     void generateButtons() {
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
@@ -294,6 +304,60 @@ public class MapManager {
                 //map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
+
+        View.OnClickListener tmpOnclickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int[] pos = (int[]) view.getTag();
+                int x = pos[0];
+                int y = pos[1];
+                switch (gameState) {
+                    case WAIT:
+                        while (map[x][y].isMine() || map[x][y].mineCount != 0)
+                            generateMap();
+//                            adjustMap(x, y);
+                        timeManagementMaster.start();
+                        gameState = GameState.PLAYING;
+                    case PLAYING:
+                        switch (map[x][y].getButtonState()) {
+                            case DEFAULT:
+                                extendBlockAt(x, y);
+                                break;
+                            case OPENED:
+                                openBlockAround(x, y);
+                                //flagBlockAround(x, y);//gaoshiqing
+                                break;
+                            case FLAGED:
+                                break;
+                        }
+                        break;
+                    case OVER:
+                        break;
+                }
+                //   Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
+            }
+        };
+        View.OnLongClickListener tmpOnLongClickListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (gameState == GameState.PLAYING) {
+                    int[] pos = (int[]) view.getTag();
+                    // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
+                    if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.DEFAULT) {
+                        map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
+                        leftflag--;
+                        txtleftmines.setText(Integer.toString(leftflag));
+                    } else if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.FLAGED) {
+                        map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
+                        leftflag++;
+                        txtleftmines.setText(Integer.toString(leftflag));
+                    }
+                }
+                return true;
+            }
+        };
+
         LinearLayout parent = context.findViewById(R.id.boxLayout);
         parent.removeAllViews();
         for (int j = 1; j <= height; j++) {
@@ -313,57 +377,10 @@ public class MapManager {
                 //b.setPadding(1, 1, 1, 1);
                 // if (map[i][j].isMine)b.setText("雷");
                 //   else b.setText(Integer.toString(map[i][j].getMineCount()));
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                        int[] pos = (int[]) view.getTag();
-                        int x = pos[0];
-                        int y = pos[1];
-                        switch (gameState) {
-                            case WAIT:
-                                while (map[x][y].isMine()||map[x][y].mineCount!=0) generateMap();
-                                timeManagementMaster.start();
-                                gameState = GameState.PLAYING;
-                            case PLAYING:
-                                switch (map[x][y].getButtonState()) {
-                                    case DEFAULT:
-                                        extendBlockAt(x, y);
-                                        break;
-                                    case OPENED:
-                                        openBlockAround(x, y);
-                                        //flagBlockAround(x, y);//gaoshiqing
-                                        break;
-                                    case FLAGED:
-                                        break;
-                                }
-                                break;
-                            case OVER:
-                                break;
-                        }
-                        //   Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
-                    }
-                });
+                b.setOnClickListener(tmpOnclickListener);
                 b.setLongClickable(true);
-                b.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        if (gameState == GameState.PLAYING) {
-                            int[] pos = (int[]) view.getTag();
-                            // Toast.makeText(context,Integer.toString(pos[0])+","+Integer.toString(pos[1]),Toast.LENGTH_SHORT ).show();
-                            if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.DEFAULT) {
-                                map[pos[0]][pos[1]].setButtonState(MapItem.State.FLAGED);
-                                leftflag--;
-                                txtleftmines.setText(Integer.toString(leftflag));
-                            } else if (map[pos[0]][pos[1]].getButtonState() == MapItem.State.FLAGED) {
-                                map[pos[0]][pos[1]].setButtonState(MapItem.State.DEFAULT);
-                                leftflag++;
-                                txtleftmines.setText(Integer.toString(leftflag));
-                            }
-                        }
-                        return true;
-                    }
-                });
+                b.setOnLongClickListener(tmpOnLongClickListener);
                 ln.addView(b);
                 map[i][j].setViewButton(b);
             }
