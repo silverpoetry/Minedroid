@@ -64,7 +64,7 @@ public class MapItem {
             } else if (state == MapItem.State.FLAGED) {
                 this.viewButton.setText("标");
             } else if (state == MapItem.State.OPENED) {
-                int mineCount = this.getMineCount();
+                int mineCount = this.mineCount;
                 if (mineCount != 0) {
                     this.viewButton.setText(Integer.toString(mineCount));
                 }

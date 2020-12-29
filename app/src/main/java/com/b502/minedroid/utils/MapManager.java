@@ -55,6 +55,23 @@ public class MapManager {
 
     TimeManagementMaster timeManagementMaster;
 
+    //calculate minecount upon click -- try to avoid a long latency when generating map
+    int getMineCountAt(int x, int y) {
+        if (map[x][y].getMineCount() == 9) {
+            map[x][y].setMineCount(
+                    b2i(map[x - 1][y + 1].isMine()) +
+                            b2i(map[x][y + 1].isMine()) +
+                            b2i(map[x + 1][y + 1].isMine()) +
+                            b2i(map[x - 1][y].isMine()) +
+                            b2i(map[x + 1][y].isMine()) +
+                            b2i(map[x - 1][y - 1].isMine()) +
+                            b2i(map[x][y - 1].isMine()) +
+                            b2i(map[x + 1][y - 1].isMine())
+            );
+        }
+        return map[x][y].getMineCount();
+    }
+
     public TimeManagementMaster getTimeManagementMaster() {
         return timeManagementMaster;
     }
@@ -83,12 +100,6 @@ public class MapManager {
         leftblock = width * height - count;
         buttonwidth = this.difficulty == GameDifficulty.EASY ? 40 : 25;
         gametime = 0;
-//        for (int i = 0; i <= width + 1; i++) {
-//            for (int j = 0; j <= height + 1; j++) {
-//                map[i][j] = new MapItem(false);
-//                //map[i][j].buttonState = MapItem.State.DEFAULT;
-//            }
-//        }
         txtTime = context.findViewById(R.id.txtTime);
         btnsmile = context.findViewById(R.id.btnsmile);
         txtleftmines = context.findViewById(R.id.txtleftmines);
@@ -130,6 +141,7 @@ public class MapManager {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j].setMine(false);
                 map[i][j].setButtonState(MapItem.State.DEFAULT);
+                map[i][j].setMineCount(9);              //a impossible value to mark that it is not calculated yet
             }
         }
         //生成地雷编号
@@ -143,6 +155,9 @@ public class MapManager {
             numlist.remove(index);
             map[(ind % width) + 1][(ind / width) + 1].setMine(true);
         }
+
+        //droped because it cause a long latency when generating map
+/*
         for (int i = 1; i <= width; i++) {
             for (int j = 1; j <= height; j++) {
                 //统计非地雷块周围地雷数目
@@ -160,6 +175,7 @@ public class MapManager {
                 }
             }
         }
+*/
     }
 
     void gameWin() {
@@ -202,12 +218,13 @@ public class MapManager {
         if (map[x][y].getButtonState() != MapItem.State.DEFAULT) return;
 
         if (!map[x][y].isMine()) {
-            map[x][y].setButtonState(MapItem.State.OPENED);
+            int minecount = getMineCountAt(x, y);               //make sure use the calculated minecount
+            map[x][y].setButtonState(MapItem.State.OPENED);     //set state after calculating minecount and before recursion
             leftblock--;
             if (leftblock == 0) {
                 gameWin();
             }
-            if (map[x][y].getMineCount() == 0) {
+            if (minecount == 0) {
                 extendBlockAt(x, y - 1);
                 extendBlockAt(x, y + 1);
                 extendBlockAt(x - 1, y);
@@ -261,7 +278,6 @@ public class MapManager {
         if (x == 0 || y == 0) return;
         if (x == width + 1 || y == height + 1) return;
 
-        MapItem block = map[x][y];
         int flagCount = 0;
 
         for (int i = x - 1; i <= x + 1; i++) {
@@ -275,7 +291,7 @@ public class MapManager {
             }
         }
 
-        if (block.getMineCount() == flagCount) {
+        if (getMineCountAt(x, y) == flagCount) {
             extendBlockAt(x, y - 1);
             extendBlockAt(x, y + 1);
             extendBlockAt(x - 1, y);
@@ -314,7 +330,7 @@ public class MapManager {
                 int y = pos[1];
                 switch (gameState) {
                     case WAIT:
-                        while (map[x][y].isMine() || map[x][y].mineCount != 0)
+                        while (map[x][y].isMine() || getMineCountAt(x, y) != 0)
                             generateMap();
 //                            adjustMap(x, y);
                         timeManagementMaster.start();
