@@ -6,8 +6,6 @@ import android.widget.Button;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
-import com.b502.minedroid.R;
-
 
 public class MapItem {
     public enum State {

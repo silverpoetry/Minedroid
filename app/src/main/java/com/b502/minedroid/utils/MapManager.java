@@ -86,7 +86,8 @@ public class MapManager {
         txtTime.setText("00:00");
         txtleftmines.setText(Integer.toString(leftflag));
         btnsmile.setText(":)");
-        generateMap();
+        //generateMap();  // initmap is what actually wanted here.
+        initMap();
     }
 
     public MapManager(Activity context, GameDifficulty difficulty) {
@@ -118,7 +119,8 @@ public class MapManager {
         txtleftmines.setText(Integer.toString(leftflag));
         btnsmile.setText(":)");
         generateButtons();
-        generateMap();
+        // generateMap(); // initmap is what actually wanted here.
+        initMap();
     }
 
     public static int b2i(boolean val) {
@@ -135,15 +137,27 @@ public class MapManager {
 
     }
 
-    void generateMap() {
-
+    //init the map, to make it looks good.
+    void initMap(){
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j].setMine(false);
                 map[i][j].setButtonState(MapItem.State.DEFAULT);
-                map[i][j].setMineCount(9);              //a impossible value to mark that it is not calculated yet
+                map[i][j].setMineCount(9);              //an impossible value to mark that it has not been calculated yet
             }
         }
+    }
+
+    void generateMap(int mask_x,int mask_y) {// mask_x,mask_y is the location where player clicked, so we should avoild to put mine there
+
+        // map init code, maybe should be move into another function: initMap
+//        for (int i = 0; i <= width + 1; i++) {
+//            for (int j = 0; j <= height + 1; j++) {
+//                map[i][j].setMine(false);
+//                map[i][j].setButtonState(MapItem.State.DEFAULT);
+//                map[i][j].setMineCount(9);              //an impossible value to mark that it is not calculated yet
+//            }
+//        }
         //生成地雷编号
         int tot = width * height;
         List<Integer> numlist = new ArrayList<>();
@@ -153,7 +167,14 @@ public class MapManager {
             int index = random.nextInt(numlist.size());
             int ind = numlist.get(index);
             numlist.remove(index);
-            map[(ind % width) + 1][(ind / width) + 1].setMine(true);
+            int x = (ind % width) + 1;
+            int y = (ind / width) + 1;
+            if (x == mask_x && y == mask_y) {
+                i--;
+                continue;
+            }
+            // map[(ind % width) + 1][(ind / width) + 1].setMine(true);
+            map[x][y].setMine(true);
         }
 
         //droped because it cause a long latency when generating map
@@ -303,21 +324,11 @@ public class MapManager {
         }
     }
 
-//    void adjustMap(int x, int y) {
-//        if (x >= 1 || x <= width || y >= 1 || y <= height) {
-//            return;
-//        }
-//        int tmpx = x, tmpy = y;
-//        for (int i = 1; i < 20; i++) {
-//
-//        }
-//    }
 
     void generateButtons() {
         for (int i = 0; i <= width + 1; i++) {
             for (int j = 0; j <= height + 1; j++) {
                 map[i][j] = new MapItem(false);
-                //map[i][j].buttonState = MapItem.State.DEFAULT;
             }
         }
 
@@ -330,9 +341,10 @@ public class MapManager {
                 int y = pos[1];
                 switch (gameState) {
                     case WAIT:
-                        while (map[x][y].isMine() || getMineCountAt(x, y) != 0)
-                            generateMap();
-//                            adjustMap(x, y);
+                        // too expensive, droped!
+                        // while (map[x][y].isMine() || getMineCountAt(x, y) != 0)
+                            // generateMap();
+                        generateMap(x,y);
                         timeManagementMaster.start();
                         gameState = GameState.PLAYING;
                     case PLAYING:
