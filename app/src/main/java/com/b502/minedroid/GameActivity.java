@@ -8,12 +8,13 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.b502.minedroid.utils.MapManager;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnSmile;
+    private AppCompatButton btnSmile;
     private MapManager mapManager;
     MapManager.GameDifficulty dif;
 
@@ -26,7 +27,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         dif = MapManager.GameDifficulty.values()[i.getIntExtra("diff", 0)];
         btnSmile = findViewById(R.id.btnsmile);
         btnSmile.setOnClickListener(this);
-        onClick(btnSmile);
+        mapManager = new MapManager(this, dif);
     }
 
     @Override
@@ -44,14 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (mapManager != null) {
             mapManager.reset();
-        } else {
-            mapManager = new MapManager(this, dif);
-//            mapManager.generateButtons();
-//            mapManager.generateMap();
         }
-        //mapManager = new MapManager(this, dif);
-        //mapManager.generateButtons();
-        //mapManager.generateMap();
     }
 
     @Override

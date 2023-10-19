@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="@id/btnsmile"
             app:layout_constraintBottom_toBottomOf="@id/btnsmile"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnsmile"
             android:layout_width="43dp"
             android:layout_height="wrap_content"

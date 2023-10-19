@@ -55,12 +55,14 @@ public class MapItem {
         if (this.viewButton != null) {
             if (state == MapItem.State.DEFAULT) {
                 this.viewButton.setText("");
-                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), android.R.drawable.btn_default);
+                Drawable drawable = ContextCompat.getDrawable(this.getViewButton().getContext(), androidx.appcompat.R.drawable.abc_btn_colored_material);
                 this.viewButton.setBackground(drawable);
+                int tmp = this.viewButton.getCompoundDrawablePadding()+15;
+                this.viewButton.setPadding(tmp, tmp, tmp, tmp);
             } else if (state == MapItem.State.FLAGED) {
                 this.viewButton.setText("标");
             } else if (state == MapItem.State.OPENED) {
-                int mineCount = this.getMineCount();
+                int mineCount = this.mineCount;
                 if (mineCount != 0) {
                     this.viewButton.setText(Integer.toString(mineCount));
                 }
