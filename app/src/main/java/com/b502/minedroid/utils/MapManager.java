@@ -223,39 +223,39 @@ public class MapManager {
     }
 
     //gaoshiqing
-//    void flagBlockAround(int x, int y) {
-//        if (x == 0 || y == 0) return;
-//        if (x == width + 1 || y == height + 1) return;
-//
-//        MapItem block = map[x][y];
-//        int Count = 0;
-//        for (int i = x - 1; i <= x + 1; i++) {
-//            for (int j = y - 1; j <= y + 1; j++) {
-//                if (i == x && j == y) {
-//                    continue;
-//                }
-//                MapItem.State state = map[i][j].getButtonState();
-//                if (state == MapItem.State.FLAGED
-//                        || state == MapItem.State.DEFAULT) {
-//                    Count++;
-//                }
-//            }
-//        }
-//        if (block.getMineCount() == Count) {
-//            for (int i = x - 1; i <= x + 1; i++) {
-//                for (int j = y - 1; j <= y + 1; j++) {
-//                    if ((i == x && j == y) || x == 0 || y == 0 || x == width + 1 || y == height + 1) {
-//                        continue;
-//                    }
-//                    if (map[i][j].getButtonState() == MapItem.State.DEFAULT) {
-//                        map[i][j].setButtonState(MapItem.State.FLAGED);
-//                        leftflag--;
-//                    }
-//                }
-//            }
-//        }
-//        txtleftmines.setText(Integer.toString(leftflag));
-//    }
+   void flagBlockAround(int x, int y) {
+       if (x == 0 || y == 0) return;
+       if (x == width + 1 || y == height + 1) return;
+
+       MapItem block = map[x][y];
+       int Count = 0;
+       for (int i = x - 1; i <= x + 1; i++) {
+           for (int j = y - 1; j <= y + 1; j++) {
+               if (i == x && j == y) {
+                   continue;
+               }
+               MapItem.State state = map[i][j].getButtonState();
+               if (state == MapItem.State.FLAGED
+                       || state == MapItem.State.DEFAULT) {
+                   Count++;
+               }
+           }
+       }
+       if (block.getMineCount() == Count) {
+           for (int i = x - 1; i <= x + 1; i++) {
+               for (int j = y - 1; j <= y + 1; j++) {
+                   if ((i == x && j == y) || x == 0 || y == 0 || x == width + 1 || y == height + 1) {
+                       continue;
+                   }
+                   if (map[i][j].getButtonState() == MapItem.State.DEFAULT) {
+                       map[i][j].setButtonState(MapItem.State.FLAGED);
+                       leftflag--;
+                   }
+               }
+           }
+       }
+       txtleftmines.setText(Integer.toString(leftflag));
+   }
 
     void openBlockAround(int x, int y) {
         if (x == 0 || y == 0) return;
@@ -333,7 +333,7 @@ public class MapManager {
                                         break;
                                     case OPENED:
                                         openBlockAround(x, y);
-//                                        flagBlockAround(x, y);//gaoshiqing
+                                        flagBlockAround(x, y);//gaoshiqing
                                         break;
                                     case FLAGED:
                                         break;
